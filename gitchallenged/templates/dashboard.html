@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Welcome, {{ profile.name }}!</p>
+
+<div class="text-center">
+    <h1>Choose a language</h1>
+
+    {% for language in languages %}
+    <button type="button" class="btn btn-primary btn-lg">{{ language }}</button>
+    {% endfor %}
+
+    <h1>Choose a degree of difficulty</h1>
+
+    {% for difficulty in difficulties %}
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary btn-lg">{{ difficulty }}</button>
+    </div>
+    {% endfor %}
+    
+    <p>Make the next part only show up after generate is pressed pls k thx</p>
+</div>
+{% endblock %}
