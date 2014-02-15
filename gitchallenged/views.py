@@ -1,8 +1,11 @@
+import json
+
 from django.contrib.auth import login as login_user
 from django.contrib.auth import logout as logout_user
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import requests
 
@@ -87,3 +90,14 @@ def authorise(request):
     login_user(request, user)
 
     return redirect('home')
+
+
+def get_repos(request, language, difficulty):
+    repo = {
+        'title': 'Wikinotes',
+        'description': 'A free and open source resource for courses etc',
+        'author': 'dellsystem',
+        'num_stars': 31,
+    }
+    data = [repo] * 5
+    return HttpResponse(json.dumps(data), content_type='application/json')
