@@ -1,3 +1,5 @@
+import collections
+import operator
 import json
 
 from django.contrib.auth import login as login_user
@@ -14,23 +16,16 @@ from gitchallenged.models import UserProfile
 
 
 def home(request):
-    languages = [
-        'Sapphire',
-        'Diamond',
-        'Emerald',
-        'Red',
-        'Blue',
-        'Yellow',
-        'Pikachu',
-    ]
-    difficulties = [
-        'Easy',
-        'Medium',
-        'Hard',
-        'Fuck you guys',
-    ]
-
     if request.user.is_authenticated():
+        languages = request.user.get_profile().get_languages()
+
+        difficulties = [
+            'Easy',
+            'Medium',
+            'Hard',
+            'Fuck you guys',
+        ]
+
         context = {
             'difficulties': difficulties,
             'profile': request.user.get_profile(),
@@ -66,11 +61,11 @@ def authorise(request):
         'client_secret': conf.CLIENT_SECRET,
         'code': code,
     })
-    access_token = login_response.text
+    access_token = '?' + login_response.text
 
     # Get some basic data about this user (username, first name, last name)
     # Eventually needs to check that the token is still valid each time
-    user_url = 'https://api.github.com/user?%s' % access_token
+    user_url = 'https://api.github.com/user' + access_token
     user_response = requests.get(user_url)
     user_data = user_response.json()
 
@@ -79,10 +74,12 @@ def authorise(request):
     username = user_data['login']
     gravatar = user_data['gravatar_id']
     name = user_data['name']
+    repos_url = user_data['repos_url']
     user, created = User.objects.get_or_create(username=username, password='')
     profile = user.get_profile()
     profile.access_token = access_token
     profile.gravatar = gravatar
+    profile.repos_url = repos_url
     profile.name = name
     profile.save()
 
@@ -95,9 +92,15 @@ def authorise(request):
 def get_repos(request, language, difficulty):
     repo = {
         'title': 'Wikinotes',
+        'difficulty': 'Hard',
+        'num_stars': 5,
+        'num_watchers': 5,
+        'num_open_issues': 30,
+        'num_commits': 1000,
         'description': 'A free and open source resource for courses etc',
         'author': 'dellsystem',
         'num_stars': 31,
+        'avatar_url': 'https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x',
     }
-    data = [repo] * 5
+    data = [repo] * 10
     return HttpResponse(json.dumps(data), content_type='application/json')
