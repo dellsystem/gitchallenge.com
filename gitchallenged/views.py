@@ -1,3 +1,5 @@
+import collections
+import operator
 import json
 
 from django.contrib.auth import login as login_user
@@ -14,15 +16,25 @@ from gitchallenged.models import UserProfile
 
 
 def home(request):
-    languages = [
-        'Sapphire',
-        'Diamond',
-        'Emerald',
-        'Red',
-        'Blue',
-        'Yellow',
-        'Pikachu',
-    ]
+    # Figure out the languages by doing a bunch of API requests
+    profile = request.user.get_profile()
+    repos_url = profile.repos_url + profile.access_token
+    repos_response = requests.get(repos_url)
+    repos = repos_response.json()
+    language_counts = collections.defaultdict(int)
+
+    for repo in repos:
+        # Make a request to get the languages for that repository
+        languages_url = repo['languages_url']
+        languages_response = requests.get(languages_url)
+        languages = languages_response.json()
+
+        for language, count in languages.iteritems():
+            language_counts[language] += count
+
+    languages = sorted(language_counts.items(), key=operator.itemgetter(1),
+        reverse=True)
+
     difficulties = [
         'Easy',
         'Medium',
@@ -66,11 +78,11 @@ def authorise(request):
         'client_secret': conf.CLIENT_SECRET,
         'code': code,
     })
-    access_token = login_response.text
+    access_token = '?' + login_response.text
 
     # Get some basic data about this user (username, first name, last name)
     # Eventually needs to check that the token is still valid each time
-    user_url = 'https://api.github.com/user?%s' % access_token
+    user_url = 'https://api.github.com/user' + access_token
     user_response = requests.get(user_url)
     user_data = user_response.json()
 
@@ -79,10 +91,12 @@ def authorise(request):
     username = user_data['login']
     gravatar = user_data['gravatar_id']
     name = user_data['name']
+    repos_url = user_data['repos_url']
     user, created = User.objects.get_or_create(username=username, password='')
     profile = user.get_profile()
     profile.access_token = access_token
     profile.gravatar = gravatar
+    profile.repos_url = repos_url
     profile.name = name
     profile.save()
 
@@ -98,6 +112,7 @@ def get_repos(request, language, difficulty):
         'description': 'A free and open source resource for courses etc',
         'author': 'dellsystem',
         'num_stars': 31,
+        'avatar_url': 'https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x',
     }
     data = [repo] * 5
     return HttpResponse(json.dumps(data), content_type='application/json')
