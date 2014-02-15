@@ -11,9 +11,27 @@ from gitchallenged.models import UserProfile
 
 
 def home(request):
+    languages = [
+        'Sapphire',
+        'Diamond',
+        'Emerald',
+        'Red',
+        'Blue',
+        'Yellow',
+        'Pikachu',
+    ]
+    difficulties = [
+        'Easy',
+        'Medium',
+        'Hard',
+        'Fuck you guys',
+    ]
+
     if request.user.is_authenticated():
         context = {
+            'difficulties': difficulties,
             'profile': request.user.get_profile(),
+            'languages': languages,
         }
         return render(request, 'dashboard.html', context)
     else:
@@ -30,7 +48,7 @@ def logout(request):
 
 
 def login(request):
-    return render(request, 'home.html')
+    return redirect('home')
 
 
 def authorise(request):
@@ -55,7 +73,6 @@ def authorise(request):
 
     # Create a user for this person (if one doesn't exist already) and add the
     # the access token to the user's profile
-    print user_data
     username = user_data['login']
     gravatar = user_data['gravatar_id']
     name = user_data['name']
