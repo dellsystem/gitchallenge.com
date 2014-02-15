@@ -6,9 +6,11 @@
 <div class="text-center">
     <h1>Choose a language</h1>
 
-    {% for language in languages %}
-    <button type="button" class="btn btn-primary btn-lg">{{ language }}</button>
-    {% endfor %}
+    <div class="btn-group">
+        {% for language in languages %}
+        <button type="button" class="btn btn-primary btn-lg">{{ language }}</button>
+        {% endfor %}
+    </div>
 
     <h1>Choose a degree of difficulty</h1>
 
@@ -18,6 +20,13 @@
     </div>
     {% endfor %}
     
-    <p>Make the next part only show up after generate is pressed pls k thx</p>
+    <h1>Ready?</h1>
+    <div class="main-button">
+        <button type="button" class="btn btn-success btn-lg">
+            Show me some projects to work on
+        </button>
+    </div>
+    
+    <p>(Make the next part only show up after generate is pressed pls k thx)</p>
 </div>
 {% endblock %}
