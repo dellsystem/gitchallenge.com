@@ -14,11 +14,11 @@
 
     <h1>Choose a degree of difficulty</h1>
 
-    {% for difficulty in difficulties %}
     <div class="btn-group">
+    {% for difficulty in difficulties %}
         <button type="button" class="btn btn-primary btn-lg">{{ difficulty }}</button>
-    </div>
     {% endfor %}
+    </div>
     
     <h1>Ready?</h1>
     <div class="main-button">
