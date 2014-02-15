@@ -92,10 +92,15 @@ def authorise(request):
 def get_repos(request, language, difficulty):
     repo = {
         'title': 'Wikinotes',
+        'difficulty': 'Hard',
+        'num_stars': 5,
+        'num_watchers': 5,
+        'num_open_issues': 30,
+        'num_commits': 1000,
         'description': 'A free and open source resource for courses etc',
         'author': 'dellsystem',
         'num_stars': 31,
         'avatar_url': 'https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x',
     }
-    data = [repo] * 5
+    data = [repo] * 10
     return HttpResponse(json.dumps(data), content_type='application/json')
