@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gitchallenged',
+    'gravatar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -85,3 +86,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
+
+AUTH_PROFILE_MODULE = 'gitchallenged.UserProfile'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'gitchallenged.backends.GithubBackend',
+)

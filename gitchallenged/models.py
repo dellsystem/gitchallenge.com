@@ -5,6 +5,8 @@ from django.db import models
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     access_token = models.CharField(max_length=40)
+    gravatar = models.CharField(max_length=48)
+    name = models.CharField(max_length=100)
 
 
 def create_user_profile(sender, instance, created, **kwargs):
