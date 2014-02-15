@@ -7,7 +7,7 @@
     <h1>Choose a language</h1>
 
     <div class="btn-group">
-        {% for language in languages %}
+        {% for language, _ in languages %}
         <button type="button" class="btn btn-primary btn-lg">{{ language }}</button>
         {% endfor %}
     </div>

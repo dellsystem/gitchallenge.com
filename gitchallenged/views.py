@@ -16,33 +16,16 @@ from gitchallenged.models import UserProfile
 
 
 def home(request):
-    # Figure out the languages by doing a bunch of API requests
-    profile = request.user.get_profile()
-    repos_url = profile.repos_url + profile.access_token
-    repos_response = requests.get(repos_url)
-    repos = repos_response.json()
-    language_counts = collections.defaultdict(int)
-
-    for repo in repos:
-        # Make a request to get the languages for that repository
-        languages_url = repo['languages_url']
-        languages_response = requests.get(languages_url)
-        languages = languages_response.json()
-
-        for language, count in languages.iteritems():
-            language_counts[language] += count
-
-    languages = sorted(language_counts.items(), key=operator.itemgetter(1),
-        reverse=True)
-
-    difficulties = [
-        'Easy',
-        'Medium',
-        'Hard',
-        'Fuck you guys',
-    ]
-
     if request.user.is_authenticated():
+        languages = request.user.get_profile().get_languages()
+
+        difficulties = [
+            'Easy',
+            'Medium',
+            'Hard',
+            'Fuck you guys',
+        ]
+
         context = {
             'difficulties': difficulties,
             'profile': request.user.get_profile(),
