@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row text-center">
+    <div class="col-md-4">
+        <h2>Discover new projects</h2>
+        <img src="{{ STATIC_URL }}img/discover.png" />
+        <p>gitchallenge allows you to find projects that you can use, learn
+        from, and work on.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Improve your skills</h2>
+        <img src="{{ STATIC_URL }}img/skills.png" />
+        <p>Something about improving your skills.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Contribute to open source</h2>
+        <img src="{{ STATIC_URL }}img/contribute.png" />
+        <p>Give back to the community by ???</p>
+    </div>
+</div>
+
+<div id="sign-in">
+    <a href="https://github.com/login/oauth/authorize?client_id=80bea12d5c8921410e4c"
+       class="btn btn-success btn-lg btn-block">
+        Sign in with GitHub
+    </a>
+</div>
+{% endblock %}
