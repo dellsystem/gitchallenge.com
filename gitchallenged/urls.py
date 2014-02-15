@@ -6,6 +6,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'gitchallenged.views.home', name='home'),
     url(r'^login$', 'gitchallenged.views.login', name='login'),
+    url(r'^logout$', 'gitchallenged.views.logout', name='logout'),
     url(r'^authorise$', 'gitchallenged.views.authorise', name='authorise'),
+    url(r'^api/repos/(?P<language>\w+)/(?P<difficulty>\w+)$',
+        'gitchallenged.views.get_repos', name='get_repos'),
     url(r'^admin/', include(admin.site.urls)),
 )
