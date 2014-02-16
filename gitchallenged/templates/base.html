@@ -13,7 +13,7 @@
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <link href="{{ STATIC_URL }}img/favicon.ico" rel="shortcut icon" type="image/x-icon">
     </head>
     <body>
         {% include 'score_modal.html' %}
@@ -21,7 +21,7 @@
         <div class="wrapper">
         <div class="container">
             {% if user.is_authenticated %}
-            <div data-scrollreveal="enter left move 25px over 1.0s wait 1.0s" class="container" id="top-left">
+            <div data-scrollreveal="enter left move 25px over 1.0s wait 1.0s" id="top-left">
                 <p>Welcome, {{ profile.name }}! You have <strong>{{ profile.total_score }}</strong> points.</p>
             </div>
             {% endif %}
