@@ -78,7 +78,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
                 <h1 class="no-clear">Repository</h1>
             </div>
             <div class="col-md-4">
-                <h1 class="no-clear">Level of difficulty</h1>
+                <h1 class="no-clear">Statistics</h1>
             </div>
         </div>
         <div class="row repository" ng-repeat="repo in repos">
@@ -92,12 +92,21 @@ module.controller('ToolCtrl', function($scope, APIService) {
             <div class="col-md-5">
                 <h2 class="no-clear">{{repo.name}}</h2>
             </div>
-            <div class="col-md-4">
-                <h3 class="no-clear">
-                    {{difficulty}}
-                    <small><br />
-                        {{repo.stargazers_count}} <span class='fa fa-star'></span>, {{repo.watchers_count}} <span class='fa fa-users'></span>, {{repo.open_issues_count}} <span class='fa fa-flag'></span>, {{repo.forks_count}} <span class='fa fa-code-fork'></span></small>
-                </h3>
+            <div class="col-md-1">
+                {{repo.stargazers_count}} <br />
+                <span class='fa fa-star' title="Stargazers"></span>
+            </div>
+            <div class="col-md-1">
+                {{repo.watchers_count}} <br />
+                <span class="fa fa-users" title="Watchers"></span>
+            </div>
+            <div class="col-md-1">
+                {{repo.open_issues_count}} <br />
+                <span class="fa fa-flag" title="Open issues"></span>
+            </div>
+            <div class="col-md-1">
+                {{repo.forks_count}} <br />
+                <span class="fa fa-code-fork" title="Forks"></span>
             </div>
             <div class="col-md-12">
                 <br />
