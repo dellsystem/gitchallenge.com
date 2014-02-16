@@ -15,32 +15,40 @@
     <body>
         <div class="container">
             {% if user.is_authenticated %}
-            <div id="gravatar">
-                <img src="//1.gravatar.com/avatar/{{ user.get_profile.gravatar }}?s=100" />
-            </div>
+            <p>Welcome, {{ profile.name }}!</p>
+            
             {% endif %}
             <ul id="menu">
-                <li><a href="{% url 'home' %}">home</a></li>
+                <li class="topright"><a href="{% url 'home' %}">home</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">logout</a></li>
+                <li class="topright"><a href="{% url 'logout' %}">logout</a></li>
                 {% endif %}
-                <li>scoreboard</li>
-                <li>about</li>
+                <li class="topright">scoreboard</li>
+                <li class="topright">about</li>
+            <div id="gravatar">
+                <img class="circular" src="//1.gravatar.com/avatar/{{ user.get_profile.gravatar }}?s=100" />
+            </div>
             </ul>
+           
             <div id="header">
                 <a href="{% url 'home' %}">
                     <img src="{{ STATIC_URL }}img/logo.png" />
                 </a>
             </div>
+
         </div>
+        <div id="introduction">
+    <p>Earn points for your pull requests, learn something and support open source!</p>
+</div>
         <div class="container">
             {% block content %}
             {% endblock %}
         </div>
         <div id="footer">
             <div class="container">
-                <p>u wot?</p>
+                <p>Made with love <a href="http://twitter.com/@pennapps">@PennApps2014</a> by <a href="http://twitter.com/dellsystem">@dellsystem</a>, <a href="http://twitter.com/tlornewr">@tlornewr</a> and <a href="http://twitter.com/vasunadella">@vasunadella</a></p>
             </div>
+            
         </div>
     </body>
 </html>
