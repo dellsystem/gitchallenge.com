@@ -24,7 +24,7 @@
             {% endif %}
 
             <div id="top-right">
-                <ul id="menu">
+                <ul data-scrollreveal="enter right move 25px over 1.0s wait 1.0s" id="menu">
                     <li><a href="{% url 'home' %}">home</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">logout</a></li>
@@ -39,26 +39,29 @@
                 {% endif %}
             </div>
            
-            <div id="header">
+            <div  data-scrollreveal="enter top move 25px over 1.0s wait 1.0s" id="header">
                 <a href="{% url 'home' %}">
                     <img src="{{ STATIC_URL }}img/logo.png" />
                 </a>
             </div>
 
         </div>
-        <div id="introduction">
+        <div data-scrollreveal="enter top move 25px over 1.0s wait 1.0s" id="introduction">
     <p>Earn points for your pull requests, learn something and support open source!</p>
 </div>
-        <div class="container">
+        <div data-scrollreveal="enter bottom move 25px over 1.0s wait 1.0s" class="container">
             {% block content %}
+            
             {% endblock %}
+        
         </div>
         <div class="push"></div></div>
-        <div id="footer" class="footer">
+        <div data-scrollreveal="enter bottom over 0.5s" id="footer" class="footer">
             <div class="container">
                 <p>Made with love <a href="http://twitter.com/@pennapps">@PennApps2014</a> by <a href="http://twitter.com/dellsystem">@dellsystem</a>, <a href="http://twitter.com/tlornewr">@tlornewr</a> and <a href="http://twitter.com/vasunadella">@vasunadella</a></p>
             </div>
             
         </div>
+        <script src="static/js/scrollReveal.js/js/scrollReveal.js"></script>
     </body>
 </html>
