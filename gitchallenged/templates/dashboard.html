@@ -20,6 +20,24 @@ module.controller('ToolCtrl', function($scope, APIService) {
     $scope.ready = false;
     $scope.repos = [];
 
+<<<<<<< HEAD
+    <div class="btn-group">
+    {% for difficulty in difficulties %}
+        <button type="button" class="btn btn-primary btn-lg">{{ difficulty }}</button>
+    {% endfor %}
+    </div>
+    
+    <h1>Ready?</h1>
+    <div class="main-button">
+        <button type="button" class="btn btn-success btn-lg">
+            Hit me with some issues
+        </button>
+    </div>
+    
+    <p>(Make the next part only show up after generate is pressed pls k thx)</p>
+
+    <h1>We recommend the following projects:</h1>
+=======
     $scope.showProjects = function() {
         APIService.getRepos($scope.language, $scope.difficulty).then(function(repos) {
             $scope.repos = repos;
@@ -30,6 +48,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
 });
 </script>
 <p>Welcome, {{ profile.name }}!</p>
+>>>>>>> b7f27a56c829170de5ee9240910cc3d8113ba018
 
 <div class="text-center" ng-app="tools" ng-controller="ToolCtrl">
     <div ng-hide='ready'>

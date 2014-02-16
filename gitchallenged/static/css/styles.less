@@ -8,6 +8,11 @@ body {
 #gravatar {
     float: left;
     margin-top: 30px;
+    >img{
+        border-radius: 125px;
+        -webkit-font-smoothing: -webkit-border-radius: 125px #fff;
+        -moz-border-radius: 125px #fff; 
+}
 }
 
 .gravatar {
@@ -33,11 +38,11 @@ body {
 
 #introduction {
     background: @lighterGrey;
-    color: @lightGrey;
+    color: @orange;
     height: 100px;
     line-height: 100px;
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1.7em;
     margin-bottom: 30px;
 }
 
@@ -49,6 +54,8 @@ body {
         padding-top: 15px;
         padding-bottom: 15px;
         font-size: 21px;
+        background-color: @orange;
+        border-color: @orange;
     }
 }
 
@@ -66,6 +73,15 @@ h1 {
     color: @white;
     padding: 30px 0;
     text-align: center;
+    a{
+        color: #fff;
+      &:hover{
+        
+        color: @orange;
+        text-decoration: none;
+      }  
+    }
+    
 }
 
 .vertical-center {
@@ -90,8 +106,20 @@ h2, h3 {
     font-weight: bold;
 }
 
-.circular{
-   border-radius: 125px;
-    -webkit-border-radius: 125px #fff;
-    -moz-border-radius: 125px #fff; 
+
+
+.topright a{
+    color:#222;
+}
+.topright a:hover{
+    
+    color: @orange;
+    text-decoration: none;
+}
+
+.topright a:focus{
+    
+    color: @orange;
+    text-decoration: none;
+
 }
