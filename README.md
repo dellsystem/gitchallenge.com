@@ -1,9 +1,9 @@
-GitChallenge
+gitchallenge
 =========
 ---
-GitChallenge is a platform for gameifying open source contributions! Solve issues on projects in the language of your choice to earn GitPoints
+gitchallenge is a platform for gameifying open source contributions! Solve issues on projects in the language of your choice to earn GitPoints
 
-We think you'll want to use GitChallenge because:
+We think you'll want to use gitchallenge because:
 
   >- It helps you discover awesome open source projects
   
@@ -14,7 +14,7 @@ We think you'll want to use GitChallenge because:
 ---
 ###Built with:
 
-GitChallenge used several open source projects:
+gitchallenge used several open source projects:
 
 * Django
 * JQuery
@@ -29,7 +29,7 @@ These projects are awesome. Check em out and contribute if you can!
 ---
 ###Built by:
 
-GitChallenge was built at [PennApps 2014](http://2014s.pennapps.com/) 
+gitchallenge was built at [PennApps 2014](http://2014s.pennapps.com/) 
 
 - [Wendy Liu](http://twitter.com/dellsystem)
 - [Toby Welch Richards](http://twitter.com/tlornewr)
