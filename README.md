@@ -1,5 +1,5 @@
-gitchallenge
-=========
+![loogo](http://gitchallenge.com/static/img/logo.png)
+===
 
 gitchallenge is a platform for gameifying open source contributions! Solve issues on projects in the language of your choice to earn GitPoints
 
@@ -25,6 +25,9 @@ gitchallenge used several open source projects:
 * ScrollReveal.js 
 
 These projects are awesome. Check em out and contribute if you can!
+
+
+Hi digital Ocean!
 
 ===
 ###Built by:
