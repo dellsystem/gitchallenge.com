@@ -36,23 +36,23 @@ module.controller('ToolCtrl', function($scope, APIService) {
 
         <div class="btn-group">
             {% for language, _ in languages %}
-            <button type="button" class="btn btn-lg" ng-click="language = '{{ language }}'">{{ language }}</button>
+            <button href='#difflabel' type="button" class="btn btn-lg" ng-click="language = '{{ language }}'">{{ language }}</button>
             {% endfor %}
         </div>
 
-        <div ng-show='language.length'>
+        <div id='difflabel' ng-show='language.length'>
           <h1>Choose a degree of difficulty</h1>
           <div class="btn-group">
             {% for difficulty in difficulties %}
-              <button type="button" class="btn btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
+              <button href='#readylabel' type="button" class="btn btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
             {% endfor %}
           </div>
         </div>
         
-        <div ng-show='difficulty.length'>
+        <div id='readylabel' ng-show='difficulty.length'>
           <h1>Ready?</h1>
           <div class="main-button">
-              <button type="button" class="btn btn-lg" ng-click="showProjects()">
+              <button href='#resultslabel' type="button" class="btn btn-lg" ng-click="showProjects()">
                   Show me some projects to work on
               </button>
           </div>
@@ -60,7 +60,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
     </div>
     
     {% verbatim %}
-    <div ng-show='ready'>
+    <div id='resultslabel' ng-show='ready'>
         <h1>We recommend the following {{difficulty}} {{language}} projects:</h1>
         <p>
             Don't like any of these projects?
