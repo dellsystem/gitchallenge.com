@@ -21,7 +21,7 @@ def home(request):
         languages = request.user.get_profile().get_languages()
 
         difficulties = [
-            'Easy',
+            'Soft',
             'Medium',
             'Hard',
             'I want to crush my ego',
