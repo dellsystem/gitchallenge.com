@@ -19,7 +19,7 @@ GitChallenge used several open source projects:
 * Django
 * JQuery
 * Bootstrap 3.0
-* Angular.js
+* AngularJS
 * OAuth
 * Font Awesome
 * ScrollReveal.js 
