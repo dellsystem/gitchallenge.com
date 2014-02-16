@@ -31,7 +31,7 @@ def get_repos(lang, difficulty, n=10):
     desired_repos = repo_score_list[start_index:end_index]
     repos = random.sample(desired_repos, min(len(desired_repos), n))
 
-    if lang == 'Python' and difficulty == 'Easy':
+    if lang == 'Python' and difficulty == 'Soft':
         wikinotes_url = "https://api.github.com/repos/dellsystem/wikinotes"
         response = requests.get(wikinotes_url)
         wikinotes = response.json()
