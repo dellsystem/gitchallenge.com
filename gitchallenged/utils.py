@@ -5,7 +5,7 @@ import requests
 
 
 difficulties = [
-    'Easy',
+    'Soft',
     'Medium',
     'Hard',
     'Nightmarishly difficult',
