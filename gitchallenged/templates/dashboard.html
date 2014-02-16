@@ -20,24 +20,6 @@ module.controller('ToolCtrl', function($scope, APIService) {
     $scope.ready = false;
     $scope.repos = [];
 
-<<<<<<< HEAD
-    <div class="btn-group">
-    {% for difficulty in difficulties %}
-        <button type="button" class="btn btn-primary btn-lg">{{ difficulty }}</button>
-    {% endfor %}
-    </div>
-    
-    <h1>Ready?</h1>
-    <div class="main-button">
-        <button type="button" class="btn btn-success btn-lg">
-            Hit me with some issues
-        </button>
-    </div>
-    
-    <p>(Make the next part only show up after generate is pressed pls k thx)</p>
-
-    <h1>We recommend the following projects:</h1>
-=======
     $scope.showProjects = function() {
         APIService.getRepos($scope.language, $scope.difficulty).then(function(repos) {
             $scope.repos = repos;
@@ -47,8 +29,6 @@ module.controller('ToolCtrl', function($scope, APIService) {
     };
 });
 </script>
-<p>Welcome, {{ profile.name }}!</p>
->>>>>>> b7f27a56c829170de5ee9240910cc3d8113ba018
 
 <div class="text-center" ng-app="tools" ng-controller="ToolCtrl">
     <div ng-hide='ready'>
@@ -56,7 +36,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
 
         <div class="btn-group">
             {% for language, _ in languages %}
-            <button type="button" class="btn btn-primary btn-lg" ng-click="language = '{{ language }}'">{{ language }}</button>
+            <button type="button" class="btn btn-lg" ng-click="language = '{{ language }}'">{{ language }}</button>
             {% endfor %}
         </div>
 
@@ -64,7 +44,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
           <h1>Choose a degree of difficulty</h1>
           <div class="btn-group">
             {% for difficulty in difficulties %}
-              <button type="button" class="btn btn-primary btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
+              <button type="button" class="btn btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
             {% endfor %}
           </div>
         </div>
@@ -72,21 +52,22 @@ module.controller('ToolCtrl', function($scope, APIService) {
         <div ng-show='difficulty.length'>
           <h1>Ready?</h1>
           <div class="main-button">
-              <button type="button" class="btn btn-success btn-lg" ng-click="showProjects()">
+              <button type="button" class="btn btn-lg" ng-click="showProjects()">
                   Show me some projects to work on
               </button>
           </div>
         </div>
     </div>
     
+    {% verbatim %}
     <div ng-show='ready'>
         <h1>We recommend the following {{difficulty}} {{language}} projects:</h1>
         <p>
             Don't like any of these projects?
         </p>
         <p>
-            <button class="btn btn-primary btn-lg" ng-click="showProjects()">Try again</button>
-            <button class="btn btn-primary btn-lg" ng-click="ready = false">Select different settings</button>
+            <button class="btn btn-lg" ng-click="showProjects()">Try again</button>
+            <button class="btn btn-lg" ng-click="ready = false">Select different settings</button>
         </p>
         <hr />
         <div class="row">
@@ -100,7 +81,6 @@ module.controller('ToolCtrl', function($scope, APIService) {
                 <h1 class="no-clear">Level of difficulty</h1>
             </div>
         </div>
-        {% verbatim %}
         <div class="row repository" ng-repeat="repo in repos">
             <br />
             <div class="col-md-1">
@@ -124,7 +104,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
                 <p>{{repo.description}}</p>
             </div>
         </div>
-        {% endverbatim %}
     </div>
+    {% endverbatim %}
 </div>
 {% endblock %}

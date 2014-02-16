@@ -6,33 +6,55 @@ body {
 }
 
 #gravatar {
-    float: left;
-    margin-top: 30px;
-    >img{
+    float: right;
+    margin-top: -35px;
+    margin-left: 10px;
+
+    .circular {
         border-radius: 125px;
-        -webkit-font-smoothing: -webkit-border-radius: 125px #fff;
-        -moz-border-radius: 125px #fff; 
-}
+        -webkit-border-radius: 125px;
+        -moz-border-radius: 125px;
+    }
 }
 
 .gravatar {
     max-width: 70px;
 }
 
+#top-left {
+    padding-top: 60px;
+    float: left;
+}
+
+#top-right {
+    padding-top: 60px;
+    float: right;
+}
+
 #menu {
     list-style-type: none;
-    padding-top: 30px;
-    float: right;
+    float: left;
 
     li {
+
         float: left;
         padding-right: 20px;
+
+        a {
+            color: #222;
+
+            &:hover {
+                color: @orange;
+                text-decoration: none;
+            }
+        }
     }
 }
 
 #header {
     clear: right;
     padding: 70px 0;
+    padding-top: 50px;
     text-align: center;
 }
 
@@ -42,7 +64,7 @@ body {
     height: 100px;
     line-height: 100px;
     text-align: center;
-    font-size: 1.7em;
+    font-size: 1.3em;
     margin-bottom: 30px;
 }
 
@@ -106,20 +128,20 @@ h2, h3 {
     font-weight: bold;
 }
 
+.btn {
+    border-color: @orange;
+    background: @orange;
+    color: @white;
 
+    &:hover {
+        background: lighten(@orange, 8%);
+        border-color: @orange;
+        color: @white;
+    }
 
-.topright a{
-    color:#222;
-}
-.topright a:hover{
-    
-    color: @orange;
-    text-decoration: none;
-}
-
-.topright a:focus{
-    
-    color: @orange;
-    text-decoration: none;
-
+    &:focus {
+        background: darken(@orange, 10%);
+        border-color: @orange;
+        color: @white;
+    }
 }

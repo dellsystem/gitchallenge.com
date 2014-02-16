@@ -76,11 +76,13 @@ def authorise(request):
     gravatar = user_data['gravatar_id']
     name = user_data['name']
     repos_url = user_data['repos_url']
+    html_url = user_data['html_url']
     user, created = User.objects.get_or_create(username=username, password='')
     profile = user.get_profile()
     profile.access_token = access_token
     profile.gravatar = gravatar
     profile.repos_url = repos_url
+    profile.html_url = html_url
     profile.name = name
     profile.save()
 

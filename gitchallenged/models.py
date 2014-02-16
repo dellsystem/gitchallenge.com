@@ -14,6 +14,7 @@ class UserProfile(models.Model):
     gravatar = models.CharField(max_length=48)
     name = models.CharField(max_length=100)
     repos_url = models.URLField()
+    html_url = models.URLField()
 
     def get_client_string(self):
         return 'client_id=%s&client_secret=%s' % (conf.CLIENT_ID, conf.CLIENT_SECRET)
@@ -23,16 +24,12 @@ class UserProfile(models.Model):
         repos_url = self.repos_url + self.access_token + client_string
         repos_response = requests.get(repos_url)
         repos = repos_response.json()
-        language_counts = collections.defaultdict(int)
+        language_counts = collections.Counter()
 
         for repo in repos:
-            # Make a request to get the languages for that repository
-            languages_url = '%s?%s' % (repo['languages_url'], client_string)
-            languages_response = requests.get(languages_url)
-            languages = languages_response.json()
-
-            for language, count in languages.iteritems():
-                language_counts[language] += count
+            language = repo['language']
+            if language:
+                language_counts[language] += 1
 
         languages = sorted(language_counts.items(), key=operator.itemgetter(1),
             reverse=True)
