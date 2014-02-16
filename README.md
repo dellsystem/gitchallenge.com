@@ -1,6 +1,6 @@
 gitchallenge
 =========
----
+
 gitchallenge is a platform for gameifying open source contributions! Solve issues on projects in the language of your choice to earn GitPoints
 
 We think you'll want to use gitchallenge because:
@@ -11,7 +11,7 @@ We think you'll want to use gitchallenge because:
   
   >- Contribute to the open source community and help propel awesome projects forward!
 
----
+===
 ###Built with:
 
 gitchallenge used several open source projects:
@@ -26,7 +26,7 @@ gitchallenge used several open source projects:
 
 These projects are awesome. Check em out and contribute if you can!
 
----
+===
 ###Built by:
 
 gitchallenge was built at [PennApps 2014](http://2014s.pennapps.com/) 
@@ -35,7 +35,6 @@ gitchallenge was built at [PennApps 2014](http://2014s.pennapps.com/)
 - [Toby Welch Richards](http://twitter.com/tlornewr)
 - [Vasu Nadella](http://twitter.com/vasunadella)
 
----
-
-####Stay Floppy Friends 
----
+===
+###Stay Floppy Friends 
+===
