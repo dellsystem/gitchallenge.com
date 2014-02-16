@@ -17,8 +17,10 @@ from gitchallenged import utils
 
 
 def home(request):
-    if request.user.is_authenticated():
-        languages = request.user.get_profile().get_languages()
+    #if request.user.is_authenticated():
+    if True:
+        #languages = request.user.get_profile().get_languages()
+        languages =['Ruby','Python']
 
         difficulties = [
             'Easy',
@@ -29,7 +31,8 @@ def home(request):
 
         context = {
             'difficulties': difficulties,
-            'profile': request.user.get_profile(),
+            #'profile': request.user.get_profile(),
+            'profile':{},
             'languages': languages,
         }
         return render(request, 'dashboard.html', context)
