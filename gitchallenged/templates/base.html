@@ -30,9 +30,11 @@
                     <li>scoreboard</li>
                     <li>about</li>
                 </ul>
-                <div id="gravatar">
-                    <a href="{{ user.get_profile.html_url }}"><img class="circular" src="//1.gravatar.com/avatar/{{ user.get_profile.gravatar }}?s=100" /></a>
-                </div>
+                {% if user.is_authenticated %}
+                    <div id="gravatar">
+                        <a href="{{ user.get_profile.html_url }}"><img class="circular" src="//1.gravatar.com/avatar/{{ user.get_profile.gravatar }}?s=100" /></a>
+                    </div>
+                {% endif %}
             </div>
            
             <div id="header">
