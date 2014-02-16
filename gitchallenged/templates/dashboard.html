@@ -96,7 +96,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
                 <h3 class="no-clear">
                     {{difficulty}}
                     <small><br />
-                    {{repo.stargazers_count}} stars, {{repo.watchers_count}} watchers, {{repo.open_issues_count}} open issues, {{repo.forks_count}} forks</small>
+                        {{repo.stargazers_count}} <span class='fa fa-star'></span>, {{repo.watchers_count}} <span class='fa fa-users'></span>, {{repo.open_issues_count}} <span class='fa fa-flag'></span>, {{repo.forks_count}} <span class='fa fa-code-fork'></span></small>
                 </h3>
             </div>
             <div class="col-md-12">

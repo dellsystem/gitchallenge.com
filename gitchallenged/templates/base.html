@@ -12,8 +12,10 @@
         <script src="{{ STATIC_URL }}js/angular.min.js"></script>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
+        <div class="wrapper">
         <div class="container">
             {% if user.is_authenticated %}
             <div id="top-left">
@@ -49,7 +51,8 @@
             {% block content %}
             {% endblock %}
         </div>
-        <div id="footer">
+        <div class="push"></div></div>
+        <div id="footer" class="footer">
             <div class="container">
                 <p>Made with love <a href="http://twitter.com/@pennapps">@PennApps2014</a> by <a href="http://twitter.com/dellsystem">@dellsystem</a>, <a href="http://twitter.com/tlornewr">@tlornewr</a> and <a href="http://twitter.com/vasunadella">@vasunadella</a></p>
             </div>
