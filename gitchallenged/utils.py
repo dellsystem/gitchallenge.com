@@ -22,13 +22,22 @@ def get_repos_scores(lang):
    return results
 
 def get_repos(lang, difficulty, n=10):
-	repo_score_list = get_repos_scores(lang)
-	which_quartile = difficulties_dict[difficulty]
-	quartile_size = len(repo_score_list)/4
-	start_index = which_quartile * quartile_size
-	end_index = (which_quartile + 1) * quartile_size
-	desired_repos = repo_score_list[start_index:end_index]
-	return random.sample(desired_repos, min(len(desired_repos), n))
+    # If the language is python, hardcode in Wikinotes for demo purposes
+    repo_score_list = get_repos_scores(lang)
+    which_quartile = difficulties_dict[difficulty]
+    quartile_size = len(repo_score_list)/4
+    start_index = which_quartile * quartile_size
+    end_index = (which_quartile + 1) * quartile_size
+    desired_repos = repo_score_list[start_index:end_index]
+    repos = random.sample(desired_repos, min(len(desired_repos), n))
+
+    if lang == 'Python' and difficulty == 'Easy':
+        wikinotes_url = "https://api.github.com/repos/dellsystem/wikinotes"
+        response = requests.get(wikinotes_url)
+        wikinotes = response.json()
+        repos[7] = wikinotes
+
+    return repos
 
 
 def get_score(issue, current_time=None):
