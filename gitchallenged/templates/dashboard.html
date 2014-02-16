@@ -1,24 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script type="text/javascript">
-var module = angular.module('tools', []);
-module.factory('APIService', function($http) {
-   return {
-        getRepos: function(language, difficulty) {
-            var url = '/api/repos/' + encodeURIComponent(language) + '/' +
-                encodeURIComponent(difficulty);
-            return $http.get(url).then(
-                function(result) {
-                    return result.data;
-                });
-        }
-   }
-});
+<p>Hey {{ profile.name }}!</p>
 
-module.controller('ToolCtrl', function($scope, APIService) {
-    $scope.ready = false;
-    $scope.repos = [];
+<div class="text-center">
+    <h1>What language are you feeling?</h1>
+
+    <div class="btn-group">
+        {% for language, _ in languages %}
+        <button type="button" class="btn btn-primary btn-lg">{{ language }}</button>
+        {% endfor %}
+    </div>
+
+    <h1>How badass are you feeling?</h1>
+
 
     $scope.showProjects = function() {
         APIService.getRepos($scope.language, $scope.difficulty).then(function(repos) {
@@ -30,9 +25,11 @@ module.controller('ToolCtrl', function($scope, APIService) {
 });
 </script>
 
-<div class="text-center" ng-app="tools" ng-controller="ToolCtrl">
-    <div ng-hide='ready'>
-        <h1>Choose a language</h1>
+    
+
+
+    <hr />
+
 
         <div class="btn-group">
             {% for language, _ in languages %}
@@ -50,10 +47,10 @@ module.controller('ToolCtrl', function($scope, APIService) {
         </div>
         
         <div ng-show='difficulty.length'>
-          <h1>Ready?</h1>
+          <h1>You Ready?</h1>
           <div class="main-button">
               <button type="button" class="btn btn-lg" ng-click="showProjects()">
-                  Show me some projects to work on
+                  Gimme something to work on!
               </button>
           </div>
         </div>
@@ -61,13 +58,13 @@ module.controller('ToolCtrl', function($scope, APIService) {
     
     {% verbatim %}
     <div ng-show='ready'>
-        <h1>We recommend the following {{difficulty}} {{language}} projects:</h1>
+        <h1>You'll probably like these {{difficulty}} {{language}} projects:</h1>
         <p>
             Don't like any of these projects?
         </p>
         <p>
-            <button class="btn btn-lg" ng-click="showProjects()">Try again</button>
-            <button class="btn btn-lg" ng-click="ready = false">Select different settings</button>
+            <button class="btn btn-lg" ng-click="showProjects()">Another try?</button>
+            <button class="btn btn-lg" ng-click="ready = false">Change settings</button>
         </p>
         <hr />
         <div class="row">
@@ -103,6 +100,73 @@ module.controller('ToolCtrl', function($scope, APIService) {
                 <br />
                 <p>{{repo.description}}</p>
             </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="no-clear">Maintainer</h1>
+        </div>
+        <div class="col-md-5">
+            <h1 class="no-clear">Repository</h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="no-clear">Difficulty</h1>
+        </div>
+    </div>
+    <div class="row repository">
+        <br />
+        <div class="col-md-1">
+            <img src="https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x" />
+        </div>
+        <div class="col-md-2">
+            <h2>dellsystem</h2>
+        </div>
+        <div class="col-md-5">
+            <h2 class="no-clear">Wikinotes</h2>
+        </div>
+        <div class="col-md-4">
+            <h3 class="no-clear">
+                Hard
+                <small><br />
+                5 Stars, 5 watchers, 10 open issues, 1010 commits</small>
+            </h3>
+        </div>
+        <div class="col-md-12">
+            <br />
+            <p>#stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stac…</p>
+        </div>
+    </div>
+    <div class="row repository">
+        <br />
+        <div class="col-md-1">
+            <img src="https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x" />
+        </div>
+        <div class="col-md-2">
+            <h2>dellsystem</h2>
+        </div>
+        <div class="col-md-5">
+            <h2 class="no-clear">Wikinotes</h2>
+        </div>
+        <div class="col-md-4">
+            <h3 class="no-clear">
+                Hard
+                <small><br />
+                5 Stars, 5 watchers, 10 open issues, 1010 commits</small>
+            </h3>
+        </div>
+        <div class="col-md-12">
+            <br />
+            <p>#stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
+            #stacked #stacked #stacked #stac…</p>
+>>>>>>> Stashed changes
         </div>
     </div>
     {% endverbatim %}
