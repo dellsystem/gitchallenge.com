@@ -36,6 +36,5 @@ gitchallenge was built at [PennApps 2014](http://2014s.pennapps.com/)
 - [Vasu Nadella](http://twitter.com/vasunadella)
 
 ===
-
-####Stay Floppy Friends 
+###Stay Floppy Friends 
 ===
