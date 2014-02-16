@@ -15,8 +15,12 @@
     <tbody>
         {% for profile in profiles %}
         <tr>
-            <td><img class="circular" src="//1.gravatar.com/avatar/{{ profile.gravatar }}?s=100" /></td>
-            <td>{{ profile.name }} (<a href="{{ profile.html_url }}">{{ profile.user.username }}</a>)</td>
+            <td>
+                <a href="http://github.com/{{ profile.user.username }}">
+                    <img class="circular" src="//1.gravatar.com/avatar/{{ profile.gravatar }}?s=100" />
+                </a>
+            </td>
+            <td>{{ profile.name }} (<a href="http://github.com/{{ profile.user.username }}">{{ profile.user.username }}</a>)</td>
             <td>{{ profile.total_score }}</td>
             <td>{{ profile.user.task_set.count }}</td>
         </tr>
