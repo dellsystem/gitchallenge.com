@@ -47,7 +47,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
 </script>
 
 <div class="text-center" ng-app="tools" ng-controller="ToolCtrl">
-    <div ng-hide='ready'>
+    <div ng-hide='ready' data-scrollreveal="enter left move 25px over 1.0s wait 1.0s">
         <h1>Pick a language</h1>
 
         <div class="btn-group">
@@ -56,8 +56,8 @@ module.controller('ToolCtrl', function($scope, APIService) {
             {% endfor %}
         </div>
 
-        <div id='difflabel' ng-show='language.length'>
-          <h1>How hard do you want it?</h1>
+        <div data-scrollreveal="enter top move 25px over 1.0s wait 1.0s" class="container" id='difflabel' ng-show='language.length'>
+          <h1 >How hard do you want it?</h1>
           <div class="btn-group">
             {% for difficulty in difficulties %}
               <button href='#readylabel' type="button" class="btn btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
@@ -65,7 +65,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
           </div>
         </div>
 
-        <div id='readylabel' ng-show='difficulty.length'>
+        <div data-scrollreveal="enter bottom move 25px over 1.0s wait 1.0s" id='readylabel' ng-show='difficulty.length'>
           <h1>Ready?</h1>
           <div class="main-button">
               <button href='#resultslabel' type="button" class="btn btn-lg" ng-click="showProjects()">
@@ -76,7 +76,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
     </div>
 
     {% verbatim %}
-    <div id='resultslabel' ng-show='ready'>
+    <div  id='resultslabel' ng-show='ready'>
         <h1>We recommend the following {{difficulty|lowercase}} {{language}} projects:</h1>
         <p>
             Not a fan of any of these?
