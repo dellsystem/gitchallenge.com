@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^login$', 'gitchallenged.views.login', name='login'),
     url(r'^logout$', 'gitchallenged.views.logout', name='logout'),
     url(r'^authorise$', 'gitchallenged.views.authorise', name='authorise'),
-    url(r'^api/repos/(?P<language>\w+)/(?P<difficulty>\w+)$',
+    url(r'^api/repos/(?P<language>[^/]+)/(?P<difficulty>[^/]+)$',
         'gitchallenged.views.get_repos', name='get_repos'),
     url(r'^admin/', include(admin.site.urls)),
 )
