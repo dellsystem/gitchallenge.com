@@ -17,10 +17,8 @@ from gitchallenged import utils
 
 
 def home(request):
-    #if request.user.is_authenticated():
-    if True:
-        #languages = request.user.get_profile().get_languages()
-        languages =['Ruby','Python']
+    if request.user.is_authenticated():
+        languages = request.user.get_profile().get_languages()
 
         difficulties = [
             'Easy',
@@ -31,8 +29,7 @@ def home(request):
 
         context = {
             'difficulties': difficulties,
-            #'profile': request.user.get_profile(),
-            'profile':{},
+            'profile': request.user.get_profile(),
             'languages': languages,
         }
         return render(request, 'dashboard.html', context)
@@ -95,18 +92,4 @@ def authorise(request):
 
 def get_repos(request, language, difficulty):
     repos = utils.get_repos(language, difficulty)
-    data = []
-    for repo in repos:
-        data.append({
-            'title': repo['name'],
-            'difficulty': difficulty,
-            'num_stars': repo['stargazers_count'],
-            'num_watchers': repo['watchers_count'],
-            'num_open_issues': repo['open_issues_count'],
-            'num_forks': repo['forks_count'],
-            'description': repo['description'],
-            'author': repo['owner']['login'],
-            'avatar_url': repo['owner']['avatar_url'],
-        })
-
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse(json.dumps(repos), content_type='application/json')

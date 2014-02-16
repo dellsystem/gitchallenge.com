@@ -11,7 +11,7 @@ difficulties = {
 }
 
 def get_repos_scores(lang):
-   url = 'https://api.github.com/search/repositories?q=language:' + lang
+   url = 'https://api.github.com/search/repositories?q=language:%s&per_page=100' % lang
    request = requests.get(url)
    repos = request.json()
 

@@ -1,129 +1,111 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script type="text/javascript">
+var module = angular.module('tools', []);
+module.factory('APIService', function($http) {
+   return {
+        getRepos: function(language, difficulty) {
+            var url = '/api/repos/' + encodeURIComponent(language) + '/' +
+                encodeURIComponent(difficulty);
+            return $http.get(url).then(
+                function(result) {
+                    return result.data;
+                });
+        }
+   }
+});
+
+module.controller('ToolCtrl', function($scope, APIService) {
+    $scope.ready = false;
+    $scope.repos = [];
+
+    $scope.showProjects = function() {
+        APIService.getRepos($scope.language, $scope.difficulty).then(function(repos) {
+            $scope.repos = repos;
+            $scope.ready = true;
+            console.log($scope);
+        });
+    };
+});
+</script>
 <p>Welcome, {{ profile.name }}!</p>
 
-<script>
-angular.module('MyApp', []).controller('MyCtrl', ['$scope', '$http', function($scope, $http) {
-        $scope.user    = {};
-        $scope.results = [];
+<div class="text-center" ng-app="tools" ng-controller="ToolCtrl">
+    <div ng-hide='ready'>
+        <h1>Choose a language</h1>
 
-        $scope.search = function() {
-              $http.get('/your/url/search', { params: user }, function(response) { $scope.results = response; }});
-              });
-</script>
+        <div class="btn-group">
+            {% for language, _ in languages %}
+            <button type="button" class="btn btn-primary btn-lg" ng-click="language = '{{ language }}'">{{ language }}</button>
+            {% endfor %}
+        </div>
 
-<div class="text-center" ng-app="MyApp" ng-controller="MyCtrl">
-
-    <div>
-      {% verbatim %}
-        <label>{{ $scope.lang }}</label>
-        <br />
-        <label>{{ $scope.diff }}</label>
-      {% endverbatim %}
-    </div>
-
-    <div ng-hide='$scope.ready'>
-    <h1>Choose a language</h1>
-
-    <div class="btn-group">
-        {% for language, _ in languages %}
-        <button type="button" class="btn btn-primary btn-lg" ng-click="$scope.lang='{{language}}'">{{ language }}</button>
-        {% endfor %}
-    </div>
-
-    <div ng-show='$scope.lang.length>0'>
-      <h1>Choose a degree of difficulty</h1>
-      <div class="btn-group">
-        {% for difficulty in difficulties %}
-          <button type="button" class="btn btn-primary btn-lg" ng-click="$scope.diff='{{ difficulty }}'">{{ difficulty }}</button>
-        {% endfor %}
-      </div>
+        <div ng-show='language.length'>
+          <h1>Choose a degree of difficulty</h1>
+          <div class="btn-group">
+            {% for difficulty in difficulties %}
+              <button type="button" class="btn btn-primary btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <div ng-show='difficulty.length'>
+          <h1>Ready?</h1>
+          <div class="main-button">
+              <button type="button" class="btn btn-success btn-lg" ng-click="showProjects()">
+                  Show me some projects to work on
+              </button>
+          </div>
+        </div>
     </div>
     
-    <div ng-show='$scope.diff.length>0'>
-      <h1>Ready?</h1>
-      <div class="main-button">
-          <button type="button" class="btn btn-success btn-lg" ng-click="getIssues()">
-              Show me some projects to work on
-          </button>
-      </div>
-    </div>
-    </div>
-    
-    <div ng-show='$scope.ready'>
-    <h1>We recommend the following projects:</h1>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <h1 class="no-clear">Author</h1>
+    <div ng-show='ready'>
+        <h1>We recommend the following projects:</h1>
+        <p>
+            Don't like any of these projects?
+        </p>
+        <p>
+            <button class="btn btn-primary btn-lg" ng-click="showProjects()">Try again</button>
+            <button class="btn btn-primary btn-lg" ng-click="ready = false">Select different settings</button>
+        </p>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <h1 class="no-clear">Author</h1>
+            </div>
+            <div class="col-md-5">
+                <h1 class="no-clear">Repository</h1>
+            </div>
+            <div class="col-md-4">
+                <h1 class="no-clear">Level of difficulty</h1>
+            </div>
         </div>
-        <div class="col-md-5">
-            <h1 class="no-clear">Repository</h1>
-        </div>
-        <div class="col-md-4">
-            <h1 class="no-clear">Level of difficulty</h1>
-        </div>
-    </div>
-    <div class="row repository">
-        <br />
-        <div class="col-md-1">
-            <img class='circular' src="https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x" />
-        </div>
-        <div class="col-md-2">
-            <h2>dellsystem</h2>
-        </div>
-        <div class="col-md-5">
-            <h2 class="no-clear">Wikinotes</h2>
-        </div>
-        <div class="col-md-4">
-            <h3 class="no-clear">
-                Hard
-                <small><br />
-                5 Stars, 5 watchers, 10 open issues, 1010 commits</small>
-            </h3>
-        </div>
-        <div class="col-md-12">
+        {% verbatim %}
+        <div class="row repository" ng-repeat="repo in repos">
             <br />
-            <p>#stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stac…</p>
+            <div class="col-md-1">
+                <img ng-src="{{ repo.owner.avatar_url }}" class="gravatar" />
+            </div>
+            <div class="col-md-2">
+                <h2>{{repo.owner.login}}</h2>
+            </div>
+            <div class="col-md-5">
+                <h2 class="no-clear">{{repo.name}}</h2>
+            </div>
+            <div class="col-md-4">
+                <h3 class="no-clear">
+                    {{difficulty}}
+                    <small><br />
+                    {{repo.stargazers_count}} stars, {{repo.watchers_count}} watchers, {{repo.open_issues_count}} open issues, {{repo.forks_count}} forks</small>
+                </h3>
+            </div>
+            <div class="col-md-12">
+                <br />
+                <p>{{repo.description}}</p>
+            </div>
         </div>
-    </div>
-    <div class="row repository">
-        <br />
-        <div class="col-md-1">
-            <img src="https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x" />
-        </div>
-        <div class="col-md-2">
-            <h2>dellsystem</h2>
-        </div>
-        <div class="col-md-5">
-            <h2 class="no-clear">Wikinotes</h2>
-        </div>
-        <div class="col-md-4">
-            <h3 class="no-clear">
-                Hard
-                <small><br />
-                5 Stars, 5 watchers, 10 open issues, 1010 commits</small>
-            </h3>
-        </div>
-        <div class="col-md-12">
-            <br />
-            <p>#stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stacked #stacked #stacked #stacked
-            #stacked #stacked #stacked #stac…</p>
-        </div>
+        {% endverbatim %}
     </div>
 </div>
-
-<div ng-repeat='issue in $scope.issues'>{% verbatim %}1{% endverbatim %}1</div>
-</div>
-
 {% endblock %}
