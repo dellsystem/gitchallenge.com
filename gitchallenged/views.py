@@ -13,6 +13,7 @@ import requests
 
 from gitchallenged import conf
 from gitchallenged.models import UserProfile
+from gitchallenged import utils
 
 
 def home(request):
@@ -23,7 +24,7 @@ def home(request):
             'Easy',
             'Medium',
             'Hard',
-            'Fuck you guys',
+            'I want to crush my ego',
         ]
 
         context = {
@@ -90,17 +91,19 @@ def authorise(request):
 
 
 def get_repos(request, language, difficulty):
-    repo = {
-        'title': 'Wikinotes',
-        'difficulty': 'Hard',
-        'num_stars': 5,
-        'num_watchers': 5,
-        'num_open_issues': 30,
-        'num_commits': 1000,
-        'description': 'A free and open source resource for courses etc',
-        'author': 'dellsystem',
-        'num_stars': 31,
-        'avatar_url': 'https://gravatar.com/avatar/13ff8dc8c2bf2a4752816e1e3f201a05?d=https%3A%2F%2Fidenticons.github.com%2F76dc611d6ebaafc66cc0879c71b5db5c.png&r=x',
-    }
-    data = [repo] * 10
+    repos = utils.get_repos(language, difficulty)
+    data = []
+    for repo in repos:
+        data.append({
+            'title': repo['name'],
+            'difficulty': difficulty,
+            'num_stars': repo['stargazers_count'],
+            'num_watchers': repo['watchers_count'],
+            'num_open_issues': repo['open_issues_count'],
+            'num_forks': repo['forks_count'],
+            'description': repo['description'],
+            'author': repo['owner']['login'],
+            'avatar_url': repo['owner']['avatar_url'],
+        })
+
     return HttpResponse(json.dumps(data), content_type='application/json')
