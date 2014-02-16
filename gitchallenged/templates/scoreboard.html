@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Scoreboard</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Gravatar</th>
+            <th>User</th>
+            <th>Number of points</th>
+            <th>Number of completed tasks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in profiles %}
+        <tr>
+            <td><img class="circular" src="//1.gravatar.com/avatar/{{ profile.gravatar }}?s=100" /></td>
+            <td>{{ profile.name }} (<a href="{{ profile.html_url }}">{{ profile.user.username }}</a>)</td>
+            <td>{{ profile.total_score }}</td>
+            <td>{{ profile.user.task_set.count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

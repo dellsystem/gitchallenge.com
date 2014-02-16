@@ -18,9 +18,11 @@
         <p>You started this task {{ task.start_time|timesince }} ago. Better get on it before someone else finishes it!</p>
         <p>Use the following URL to clone the repository:</p>
     {% endif %}
+    <pre><code>git clone git@github.com:{{ user.username }}/{{task.repository_name }}.git</code></pre>
+    <p>When you're done fixing the issue, make sure to send a pull request and
+    make sure to write <code>Closes #{{ task.number }}</code> in the body of
+    the pull request or in one of the commit messages. If your pull request is accepted and closes the issue, we'll award you your points. Good luck!</p>
 {% endif %}
-
-<pre><code>git clone git@github.com:{{ user.username }}/{{task.repository_name }}.git</code></pre>
 
 <br />
 
@@ -28,4 +30,5 @@
     <a href="https://github.com/{{ task.creator_username }}/{{ task.repository_name }}/issues/{{ task.number }}" class="btn btn-lg">View issue on GitHub</a>
     <a href="https://github.com/{{ user.username }}/{{ task.repository_name }}" class="btn btn-lg">Take me to my clone</a>
 </div>
+<br /><br />
 {% endblock %}

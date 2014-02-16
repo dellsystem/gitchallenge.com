@@ -32,8 +32,7 @@
                     <li><a href="{% url 'your_tasks' %}">your tasks</a></li>
                     <li><a href="{% url 'logout' %}">logout</a></li>
                     {% endif %}
-                    <li>scoreboard</li>
-                    <li>about</li>
+                    <li><a href="{% url 'scoreboard' %}">scoreboard</a></li>
                 </ul>
                 {% if user.is_authenticated %}
                     <div id="gravatar">

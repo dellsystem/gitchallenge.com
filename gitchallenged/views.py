@@ -128,3 +128,11 @@ def your_tasks(request):
         return render(request, 'your_tasks.html', context)
     else:
         raise PermissionDenied
+
+
+def scoreboard(request):
+    profiles = UserProfile.objects.exclude(access_token='')
+    context = {
+        'profiles': profiles,
+    }
+    return render(request, 'scoreboard.html', context)
