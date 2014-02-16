@@ -5,6 +5,14 @@
 var module = angular.module('tools', []);
 module.factory('APIService', function($http) {
    return {
+        getIssues: function(username, repository) {
+            var url = '/api/issues/' + encodeURIComponent(username) + '/' +
+                encodeURIComponent(repository);
+            return $http.get(url).then(
+                function(result) {
+                    return result.data;
+                });
+        },
         getRepos: function(language, difficulty) {
             var url = '/api/repos/' + encodeURIComponent(language) + '/' +
                 encodeURIComponent(difficulty);
@@ -19,12 +27,20 @@ module.factory('APIService', function($http) {
 module.controller('ToolCtrl', function($scope, APIService) {
     $scope.ready = false;
     $scope.repos = [];
+    $scope.project = null;
+    $scope.issues = [];
 
     $scope.showProjects = function() {
         APIService.getRepos($scope.language, $scope.difficulty).then(function(repos) {
             $scope.repos = repos;
             $scope.ready = true;
-            console.log($scope);
+        });
+    };
+
+    $scope.setRepo = function(repo) {
+        $scope.project = repo;
+        APIService.getIssues(repo.owner.login, repo.name).then(function(issues) {
+            $scope.issues = issues;
         });
     };
 });
@@ -48,7 +64,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
             {% endfor %}
           </div>
         </div>
-        
+
         <div id='readylabel' ng-show='difficulty.length'>
           <h1>Ready?</h1>
           <div class="main-button">
@@ -58,19 +74,18 @@ module.controller('ToolCtrl', function($scope, APIService) {
           </div>
         </div>
     </div>
-    
+
     {% verbatim %}
     <div id='resultslabel' ng-show='ready'>
-        <h1>We recommend the following {{difficulty}} {{language}} projects:</h1>
+        <h1>We recommend the following {{difficulty|lowercase}} {{language}} projects:</h1>
         <p>
             Don't like any of these projects?
         </p>
         <p>
-            <button class="btn btn-lg" ng-click="showProjects()">Try again</button>
-            <button class="btn btn-lg" ng-click="ready = false">Select different settings</button>
+            <a class="btn btn-lg" href="/">Change your settings</a>
         </p>
         <hr />
-        <div class="row">
+        <div class="row" ng-hide="issues.length">
             <div class="col-md-3">
                 <h1 class="no-clear">Author</h1>
             </div>
@@ -81,7 +96,10 @@ module.controller('ToolCtrl', function($scope, APIService) {
                 <h1 class="no-clear">Statistics</h1>
             </div>
         </div>
-        <div class="row repository" ng-repeat="repo in repos">
+        <div class="row repository" ng-repeat="repo in repos"
+             ng-click="setRepo(repo)"
+             ng-show='project==null || project == repo'
+             ng-animate="'fade'">
             <br />
             <div class="col-md-1">
                 <img ng-src="{{ repo.owner.avatar_url }}" class="gravatar" />
@@ -92,25 +110,65 @@ module.controller('ToolCtrl', function($scope, APIService) {
             <div class="col-md-5">
                 <h2 class="no-clear">{{repo.name}}</h2>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 stats-icon">
                 {{repo.stargazers_count}} <br />
                 <span class='fa fa-star' title="Stargazers"></span>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 stats-icon">
                 {{repo.watchers_count}} <br />
                 <span class="fa fa-users" title="Watchers"></span>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 stats-icon">
                 {{repo.open_issues_count}} <br />
                 <span class="fa fa-flag" title="Open issues"></span>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 stats-icon">
                 {{repo.forks_count}} <br />
                 <span class="fa fa-code-fork" title="Forks"></span>
             </div>
             <div class="col-md-12">
                 <br />
                 <p>{{repo.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div ng-show="issues.length">
+        <h1>Open issues</h1>
+        <div class="row issue" ng-repeat="issue in issues"
+             ng-click="setIssue(issue)"
+             ng-show='currentIssue==null || currentIssue == issue'>
+            <br />
+            <div class="col-md-12">
+                <h2 class="no-clear">{{issue.title}}</h2>
+            </div>
+            <div class="col-md-1">
+                <img ng-src="{{ issue.user.avatar_url }}" class="gravatar" />
+            </div>
+            <div class="col-md-2 stats-icon">
+                {{issue.user.login}}<br />
+                <span class='fa fa-github' title="Reporter"></span>
+            </div>
+            <div class="col-md-4 stats-icon">
+                {{issue.created_at|date:'longDate'}} <br />
+                <span class='fa fa-calendar' title="Created at"></span>
+            </div>
+            <div class="col-md-1 stats-icon">
+                {{issue.comments}} <br />
+                <span class="fa fa-comments" title="Number of comments"></span>
+            </div>
+            <div class="col-md-1 stats-icon">
+                {{issue.score}} <br />
+                <span class="fa fa-trophy" title="Score"></span>
+            </div>
+            <div class="col-md-3 stats-icon">
+                <a class="btn btn-lg" href="/start/{{project.owner.login}}/{{project.name}}/{{issue.number}}"><span class="fa fa-wrench"></span> Fix me!</a>
+            </div>
+            <div class="col-md-12">
+                <br />
+                <p>{{issue.body}}</p>
             </div>
         </div>
     </div>

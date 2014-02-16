@@ -5,6 +5,7 @@ import json
 from django.contrib.auth import login as login_user
 from django.contrib.auth import logout as logout_user
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
@@ -12,7 +13,7 @@ from django.shortcuts import render, redirect
 import requests
 
 from gitchallenged import conf
-from gitchallenged.models import UserProfile
+from gitchallenged.models import Task, UserProfile
 from gitchallenged import utils
 
 
@@ -20,16 +21,8 @@ def home(request):
     if request.user.is_authenticated():
         languages = request.user.get_profile().get_languages()
 
-        difficulties = [
-            'Easy',
-            'Medium',
-            'Hard',
-            'I want to crush my ego',
-        ]
-
         context = {
-            'difficulties': difficulties,
-            'profile': request.user.get_profile(),
+            'difficulties': utils.difficulties,
             'languages': languages,
         }
         return render(request, 'dashboard.html', context)
@@ -95,3 +88,43 @@ def authorise(request):
 def get_repos(request, language, difficulty):
     repos = utils.get_repos(language, difficulty)
     return HttpResponse(json.dumps(repos), content_type='application/json')
+
+
+def get_issues(request, username, repository):
+    issues = utils.get_issues(username, repository)
+    return HttpResponse(json.dumps(issues), content_type='application/json')
+
+
+@login_required
+def start(request, username, repository, number):
+    access_token = request.user.get_profile().access_token
+    if access_token:
+        # Fork that shit
+        fork_url = 'https://api.github.com/repos/%s/%s/forks%s' % (username, repository, access_token)
+        response = requests.post(fork_url)
+
+        # Start the task
+        task, created = Task.objects.get_or_create(user=request.user,
+            creator_username=username, repository_name=repository,
+            number=number)
+        context = {
+            'task': task,
+            'created': created,
+        }
+
+        return render(request, 'start.html', context)
+    else:
+        raise PermissionDenied
+
+@login_required
+def your_tasks(request):
+    access_token = request.user.get_profile().access_token
+    if access_token:
+        tasks = Task.objects.filter(user=request.user).order_by('end_time')
+        context = {
+            'tasks': tasks,
+        }
+
+        return render(request, 'your_tasks.html', context)
+    else:
+        raise PermissionDenied

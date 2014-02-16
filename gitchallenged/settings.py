@@ -7,6 +7,8 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
+import django.conf.global_settings as DEFAULT_SETTINGS
+
 # Ensure that we have access to user-specific configuration settings
 from gitchallenged import conf
 
@@ -92,4 +94,8 @@ AUTH_PROFILE_MODULE = 'gitchallenged.UserProfile'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'gitchallenged.backends.GithubBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    'gitchallenged.context_processors.check_score',
 )

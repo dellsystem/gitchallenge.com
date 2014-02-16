@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+</div>
 
-
-
+<div id="introduction">
+    <p>Earn points for your pull requests, learn something and support open source!</p>
+</div>
+<div class="container">
 <div class="row text-center">
     <div class="col-md-4">
         <h2>Discover new projects</h2>
@@ -23,7 +26,7 @@
 </div>
 
 <div class="main-button">
-    <a href="https://github.com/login/oauth/authorize?client_id={{ client_id }}&redirect_uri=http%3A%2F%2Fgitchallenged.com%2Fauthorise&scope=user"
+    <a href="https://github.com/login/oauth/authorize?client_id={{ client_id }}&redirect_uri=http%3A%2F%2Fgitchallenged.com%2Fauthorise&scope=user,repo"
        class="btn btn-lg btn-block">
         Sign in with GitHub
     </a>

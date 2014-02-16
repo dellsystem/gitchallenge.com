@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your tasks</h1>
+{% if tasks %}
+<ul>
+    {% for task in tasks %}
+        <li><a href="{{task.get_absolute_url}}">{{task}}</a> &mdash;
+            {% if not task.end_time %}<strong>IN PROGRESS</strong>
+            {% else %}
+                {% if task.points_gained %}
+                Complete (gained {{task.points_gained}} points)
+                {% else %}
+                Never completed (closed by someone else)
+                {% endif %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>You haven't started any tasks yet :( Why not <a href="{% url 'home'
+%}">choose and issue to fix?</a></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% if show_modal %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Score updates</h4>
+      </div>
+      <div class="modal-body">
+        Hi {{profile.name}}! We have some updates on your tasks.
+        {% if lost_issues and completed_issues %}
+        We have both good news and bad news.
+        {% else %}
+            {% if completed_issues %}
+                The good news is, the following tasks were completed by you:
+                <ul>
+                    {% for issue in completed_issues %}
+                    <li>{{ issue }}, for which you gained
+                        <strong>{{ task.points_gained }}</strong> points
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if lost_issues %}
+                The bad news is, the following tasks were completed by other people before you could get to them:
+                <ul>
+                    {% for issue in lost_issues %}
+                    <li>{{ issue }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

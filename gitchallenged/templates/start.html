@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ task|capfirst }}</h1>
+{% if task.end_time %}
+    {% if task.points_gained %}
+        <p>You closed this task on {{ task.end_time }} and earned
+        {{task.points_gained}} points for it. Congratulations!</p>
+    {% else %}
+        <p>This task was closed on {{task.end_time}} by someone else :( 
+        Better luck next time?</p>
+    {% endif %}
+{% else %}
+    {% if created %}
+        <p>You have committed yourself to working on {{ task }}. We've forked the
+        repository for you, which you can clone using the following command:</p>
+        {% else %}
+        <p>You started this task {{ task.start_time|timesince }} ago. Better get on it before someone else finishes it!</p>
+        <p>Use the following URL to clone the repository:</p>
+    {% endif %}
+{% endif %}
+
+<pre><code>git clone git@github.com:{{ user.username }}/{{task.repository_name }}.git</code></pre>
+
+<br />
+
+<div class="text-center">
+    <a href="https://github.com/{{ task.creator_username }}/{{ task.repository_name }}/issues/{{ task.number }}" class="btn btn-lg">View issue on GitHub</a>
+    <a href="https://github.com/{{ user.username }}/{{ task.repository_name }}" class="btn btn-lg">Take me to my clone</a>
+</div>
+{% endblock %}

@@ -1,11 +1,43 @@
 import collections
+import datetime
 import operator
 
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
 import requests
 
 from gitchallenged import conf
+from gitchallenged import utils
+
+
+class Task(models.Model):
+    user = models.ForeignKey(User)
+    creator_username = models.CharField(max_length=255)
+    repository_name = models.CharField(max_length=255)
+    number = models.IntegerField()
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    points_gained = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return "issue #%s for %s/%s" % (self.number, self.creator_username,
+            self.repository_name)
+
+    def finish(self, should_get_points=False):
+        issue_url = 'https://api.github.com/repos/%s/%s/issues/%s' % (
+            self.creator_username, self.repository_name, self.number)
+        issue = requests.get(issue_url).json()
+
+        # Only gain points if the user submitted a pull request
+        self.points_gained = utils.get_score(issue,
+            current_time=self.start_time.replace(tzinfo=None))
+        self.end_time = datetime.datetime.now()
+        self.save()
+
+    def get_absolute_url(self):
+        return reverse('start', args=[self.creator_username,
+            self.repository_name, self.number])
 
 
 class UserProfile(models.Model):
@@ -15,6 +47,7 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=100)
     repos_url = models.URLField()
     html_url = models.URLField()
+    total_score = models.IntegerField()
 
     def get_client_string(self):
         return 'client_id=%s&client_secret=%s' % (conf.CLIENT_ID, conf.CLIENT_SECRET)
@@ -35,6 +68,7 @@ class UserProfile(models.Model):
             reverse=True)
 
         return languages
+
 
 
 def create_user_profile(sender, instance, created, **kwargs):

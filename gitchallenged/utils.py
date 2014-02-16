@@ -1,14 +1,16 @@
+import datetime
 import random
 
 import requests
 
 
-difficulties = {
-	"Easy": 0,
-	"Medium": 1,
-	"Hard":	2,
-	"I want to crush my ego": 3,
-}
+difficulties = [
+    'Easy',
+    'Medium',
+    'Hard',
+    'Nightmarishly difficult',
+]
+difficulties_dict = dict((difficulty, i) for (i, difficulty) in enumerate(difficulties))
 
 def get_repos_scores(lang):
    url = 'https://api.github.com/search/repositories?q=language:%s&per_page=100' % lang
@@ -21,9 +23,31 @@ def get_repos_scores(lang):
 
 def get_repos(lang, difficulty, n=10):
 	repo_score_list = get_repos_scores(lang)
-	which_quartile = difficulties[difficulty]
+	which_quartile = difficulties_dict[difficulty]
 	quartile_size = len(repo_score_list)/4
 	start_index = which_quartile * quartile_size
 	end_index = (which_quartile + 1) * quartile_size
 	desired_repos = repo_score_list[start_index:end_index]
 	return random.sample(desired_repos, min(len(desired_repos), n))
+
+
+def get_score(issue, current_time=None):
+    # Only when calculating the original score
+    if current_time is None:
+        current_time = datetime.datetime.now()
+
+    text_length = len(issue['body'])
+    created_at = datetime.datetime.strptime(issue['created_at'], "%Y-%m-%dT%H:%M:%SZ")
+    num_seconds_open = (current_time - created_at).total_seconds()
+    num_comments = issue['comments']
+    return max(int((num_comments + 1) * num_seconds_open * (text_length + 1)/ 10000000), 1)
+
+
+def get_issues(username, repository, n=10):
+    url = 'https://api.github.com/repos/%s/%s/issues?issues=open&per_page=100' % (username, repository)
+    request = requests.get(url)
+    issues = request.json()
+    for issue in issues:
+        issue['score'] = get_score(issue)
+
+    return random.sample(issues, min(len(issues), n))

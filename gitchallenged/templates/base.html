@@ -9,17 +9,19 @@
         <link rel="stylesheet/less" type="text/css"
                       href="{{ STATIC_URL }}css/styles.less" />
         <script src="{{ STATIC_URL }}js/less.min.js"></script>
-        <script src="{{ STATIC_URL }}js/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
+        {% include 'score_modal.html' %}
+        {% with profile=user.get_profile %}
         <div class="wrapper">
         <div class="container">
             {% if user.is_authenticated %}
             <div id="top-left">
-                <p>Welcome, {{ profile.name }}!</p>
+                <p>Welcome, {{ profile.name }}! You have <strong>{{ profile.total_score }}</strong> points.</p>
             </div>
             {% endif %}
 
@@ -27,6 +29,7 @@
                 <ul id="menu">
                     <li><a href="{% url 'home' %}">home</a></li>
                     {% if user.is_authenticated %}
+                    <li><a href="{% url 'your_tasks' %}">your tasks</a></li>
                     <li><a href="{% url 'logout' %}">logout</a></li>
                     {% endif %}
                     <li>scoreboard</li>
@@ -46,9 +49,6 @@
             </div>
 
         </div>
-        <div id="introduction">
-    <p>Earn points for your pull requests, learn something and support open source!</p>
-</div>
         <div class="container">
             {% block content %}
             {% endblock %}
@@ -60,5 +60,6 @@
             </div>
             
         </div>
+        {% endwith %}
     </body>
 </html>
