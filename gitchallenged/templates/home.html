@@ -4,31 +4,32 @@
 </div>
 
 <div id="introduction">
-    <p>Earn points for your pull requests, learn something and support open source!</p>
+    <p>Learn more about code, help open source software and earn imaginary internet points by solving Github issues!</p>
 </div>
+<br />
 <div class="container">
 <div class="row text-center">
     <div class="col-md-4">
-        <h2>Discover new projects</h2>
+        <h2>Discover new open source projects</h2>
         <img src="{{ STATIC_URL }}img/discover.png" />
-        <p>GitChallenge will show you tons of open source projects that you can use, learn from and even join!</p>
+        <p>We'll show you tons of open source projects that you can use and even join!</p>
     </div>
     <div class="col-md-4">
-        <h2>Get a whole lot better</h2>
+        <h2>Get better at programming by debugging</h2>
         <img src="{{ STATIC_URL }}img/skills.png" />
-        <p>Learn by debugging - the most important part of the programming learning process</p>
+        <p>Learn by debugging - the most important part of the programming learning process.</p>
     </div>
     <div class="col-md-4">
-        <h2>Contribute to open source</h2>
+        <h2>Join the open source movement</h2>
         <img src="{{ STATIC_URL }}img/contribute.png" />
-        <p>Give back to the community by ???</p>
+        <p>Push open source projects forward by helping them fix issues and implement features.</p>
     </div>
 </div>
 
 <div class="main-button">
     <a href="https://github.com/login/oauth/authorize?client_id={{ client_id }}&redirect_uri=http%3A%2F%2Fgitchallenged.com%2Fauthorise&scope=user,repo"
        class="btn btn-lg btn-block">
-        Sign in with GitHub
+        Sign in with Github <br> <b<i class="fa fa-github"></i> 
     </a>
 </div>
 {% endblock %}

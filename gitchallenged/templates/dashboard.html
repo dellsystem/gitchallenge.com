@@ -48,7 +48,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
 
 <div class="text-center" ng-app="tools" ng-controller="ToolCtrl">
     <div ng-hide='ready'>
-        <h1>Choose a language</h1>
+        <h1>Pick a language</h1>
 
         <div class="btn-group">
             {% for language, _ in languages %}
@@ -57,7 +57,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
         </div>
 
         <div id='difflabel' ng-show='language.length'>
-          <h1>Choose a degree of difficulty</h1>
+          <h1>How hard do you want it?</h1>
           <div class="btn-group">
             {% for difficulty in difficulties %}
               <button href='#readylabel' type="button" class="btn btn-lg" ng-click="difficulty = '{{ difficulty }}'">{{ difficulty }}</button>
@@ -79,7 +79,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
     <div id='resultslabel' ng-show='ready'>
         <h1>We recommend the following {{difficulty|lowercase}} {{language}} projects:</h1>
         <p>
-            Don't like any of these projects?
+            Not a fan of any of these?
         </p>
         <p>
             <a class="btn btn-lg" href="/">Change your settings</a>
@@ -87,7 +87,7 @@ module.controller('ToolCtrl', function($scope, APIService) {
         <hr />
         <div class="row" ng-hide="issues.length">
             <div class="col-md-3">
-                <h1 class="no-clear">Author</h1>
+                <h1 class="no-clear">Maintainer</h1>
             </div>
             <div class="col-md-5">
                 <h1 class="no-clear">Repository</h1>
