@@ -26,6 +26,9 @@ gitchallenge used several open source projects:
 
 These projects are awesome. Check em out and contribute if you can!
 
+
+Hi digital Ocean!
+
 ===
 ###Built by:
 
