@@ -3,36 +3,57 @@
 {% block content %}
 <p>Welcome, {{ profile.name }}!</p>
 
-<div class="text-center">
+<script>
+angular.module('MyApp', []).controller('MyCtrl', ['$scope', '$http', function($scope, $http) {
+        $scope.user    = {};
+        $scope.results = [];
+
+        $scope.search = function() {
+              $http.get('/your/url/search', { params: user }, function(response) { $scope.results = response; }});
+              });
+</script>
+
+<div class="text-center" ng-app="MyApp" ng-controller="MyCtrl">
+
+    <div>
+      {% verbatim %}
+        <label>{{ $scope.lang }}</label>
+        <br />
+        <label>{{ $scope.diff }}</label>
+      {% endverbatim %}
+    </div>
+
+    <div ng-hide='$scope.ready'>
     <h1>Choose a language</h1>
 
     <div class="btn-group">
         {% for language, _ in languages %}
-        <button type="button" class="btn btn-primary btn-lg">{{ language }}</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-click="$scope.lang='{{language}}'">{{ language }}</button>
         {% endfor %}
     </div>
 
-    <h1>Choose a degree of difficulty</h1>
-
-    <div class="btn-group">
-    {% for difficulty in difficulties %}
-        <button type="button" class="btn btn-primary btn-lg">{{ difficulty }}</button>
-    {% endfor %}
+    <div ng-show='$scope.lang.length>0'>
+      <h1>Choose a degree of difficulty</h1>
+      <div class="btn-group">
+        {% for difficulty in difficulties %}
+          <button type="button" class="btn btn-primary btn-lg" ng-click="$scope.diff='{{ difficulty }}'">{{ difficulty }}</button>
+        {% endfor %}
+      </div>
     </div>
     
-    <h1>Ready?</h1>
-    <div class="main-button">
-        <button type="button" class="btn btn-success btn-lg">
-            Show me some projects to work on
-        </button>
+    <div ng-show='$scope.diff.length>0'>
+      <h1>Ready?</h1>
+      <div class="main-button">
+          <button type="button" class="btn btn-success btn-lg" ng-click="getIssues()">
+              Show me some projects to work on
+          </button>
+      </div>
+    </div>
     </div>
     
-    <p>(Make the next part only show up after generate is pressed pls k thx)</p>
-
+    <div ng-show='$scope.ready'>
     <h1>We recommend the following projects:</h1>
-
     <hr />
-
     <div class="row">
         <div class="col-md-3">
             <h1 class="no-clear">Author</h1>
@@ -101,4 +122,8 @@
         </div>
     </div>
 </div>
+
+<div ng-repeat='issue in $scope.issues'>{% verbatim %}1{% endverbatim %}1</div>
+</div>
+
 {% endblock %}
