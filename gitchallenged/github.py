@@ -1,24 +1,33 @@
+import random
+
 import requests
 import simplejson as json
-from pprint import pprint
-githubReq = requests.get('https://api.github.com/repos/dellsystem/wikinotes/pulls')
-githubJson = json.loads(githubReq.text)
-for shit in githubJson:
-	print 'Title: ' + shit["title"]
-	print 'State: ' + shit["state"]
-	if shit["created_at"] and shit["merged_at"] != None:
-		print 'Created at: ' + shit["created_at"]
-		print 'Merged at: ' + shit["merged_at"]
-	elif shit["created_at"] is None:
-		print 'Created at: null'
-	elif shit["merged_at"] is None:
-		print 'Created at: null'
-	print "---------"
 
 
-class GithubRepo(reponame, )
+difficulties = {
+	"easy": 0,
+	"medium": 1,
+	"hard":	2,
+	"You gotta be fuckin' kiddin": 3				
+}
 
-class GithubIssue()
+def get_repos_scores(lang, diff):
+   url = 'https://api.github.com/search/repositories?q=python+language:' + lang + '&sort=stars&order=desc'
+   github_language_request = requests.get(url)
+   github_language_request_json = json.loads(github_language_request)
+
+   results=list(github_language_request_json['items'])
+   results=sorted(results,key=lambda x:x['open_issues_count']*x['stargazers_count']*x['watchers_count']*x['forks'])
+   return results
+
+def get_repos(lang, diff, n=10):
+	repo_score_list = get_repos_scores(lang, diff)
+	which_quartile = difficulties[diff]
+	quartile_size = len(repo_score_list)/4
+	start_index = which_quartile * quartile_size 
+	end_index = (which_quartile + 1) * quartile_size
+	desired_repos = repo_score_list[start_index:end_index]
+	return random.sample(desired_repos, n)
 
 class GithubUser(username):
 	def is_empty(any_structure):
@@ -49,4 +58,4 @@ class GithubUser(username):
 			getTopLanguages.append(repo["languages_url"])
 
 
-class GithubMeta()
+
