@@ -19,7 +19,7 @@ def check_score(request):
                 issue = requests.get(issue_url).json()
 
                 # Make sure this user submitted a merged pull req
-                if issue['closed_at'] is not None:
+                if issue.get('closed_at') is not None:
                     pulls_url = 'https://api.github.com/repos/%s/%s/pulls%s&state=closed' % (
                         task.creator_username, task.repository_name,
                         profile.access_token)
